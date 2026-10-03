@@ -1,0 +1,32 @@
+{
+  "tasks": [
+    {
+      "id": "base",
+      "operation": "constant",
+      "value": 12
+    },
+    {
+      "id": "extra",
+      "operation": "constant",
+      "value": 8
+    },
+    {
+      "id": "total",
+      "operation": "sum",
+      "depends_on": [
+        "base",
+        "extra"
+      ]
+    },
+    {
+      "id": "scaled",
+      "operation": "multiply",
+      "depends_on": [
+        "total"
+      ],
+      "values": [
+        2
+      ]
+    }
+  ]
+}

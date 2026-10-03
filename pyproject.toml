@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "workflow-dag-engine"
+version = "1.0.0"
+description = "Concurrent dependency execution with retries, timeouts and failure propagation"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.scripts]
+workflow-dag-engine = "workflow_dag_engine:entrypoint"
+
+[tool.setuptools.packages.find]
+include = ["workflow_dag_engine*"]
