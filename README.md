@@ -36,3 +36,13 @@ Business algorithms live in `workflow_dag_engine/core.py`; `workflow_dag_engine/
 Only allowlisted local operations execute; no arbitrary commands or submitted Python are run. Work is at least once under retry, and the journal is a run result, not crash-resumable orchestration.
 
 This project demonstrates implemented engineering practices. It does not claim production deployment history or external certifications.
+
+## Dependency execution planning
+
+Inspect topological execution layers and dependency depth without running operations. The same cycle and dependency validation applies to plans and runs.
+
+```sh
+python -m workflow_dag_engine plan examples/workflow.json
+```
+
+Create the named input snapshots, databases or plan files first using the existing commands above.

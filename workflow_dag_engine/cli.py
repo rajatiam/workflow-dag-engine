@@ -1,22 +1,23 @@
-import argparse, asyncio, json
+import argparse, json
+import asyncio
 from pathlib import Path
-from .core import execute, validate, write_journal
+from .core import execute, validate, write_journal, plan
 
 
 def main(argv=None):
-    parser = argparse.ArgumentParser(
-        description="Run allowlisted local workflows with dependency ordering"
-    )
+    parser = argparse.ArgumentParser(description="Inspect and run dependency workflows")
     commands = parser.add_subparsers(dest="command", required=True)
-    run = commands.add_parser("run")
-    run.add_argument("workflow")
-    run.add_argument("--workers", type=int, default=4)
-    run.add_argument("--journal")
-    check = commands.add_parser("validate")
-    check.add_argument("workflow")
+    for name in ["run", "validate", "plan"]:
+        sub = commands.add_parser(name)
+        sub.add_argument("workflow")
+        if name == "run":
+            sub.add_argument("--workers", type=int, default=4)
+            sub.add_argument("--journal")
     args = parser.parse_args(argv)
     spec = json.loads(Path(args.workflow).read_text(encoding="utf-8"))
-    if args.command == "validate":
+    if args.command == "plan":
+        result = plan(spec)
+    elif args.command == "validate":
         result = {"valid": True, "tasks": len(validate(spec))}
     else:
         if (

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "workflow-dag-engine"
-version = "1.0.0"
+version = "1.1.0"
 description = "Concurrent dependency execution with retries, timeouts and failure propagation"
 requires-python = ">=3.11"
 dependencies = []

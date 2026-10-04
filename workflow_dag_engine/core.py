@@ -160,3 +160,25 @@ def write_journal(path, result):
         os.replace(temporary, path)
     finally:
         temporary.unlink(missing_ok=True)
+
+
+def plan(spec):
+    mapping = validate(spec)
+    remaining = set(mapping)
+    done = set()
+    layers = []
+    while remaining:
+        layer = sorted(
+            key for key in remaining if set(mapping[key].get("depends_on", [])) <= done
+        )
+        if not layer:
+            raise ValueError("Workflow cannot be scheduled")
+        layers.append(layer)
+        done.update(layer)
+        remaining.difference_update(layer)
+    return {
+        "layers": layers,
+        "depth": len(layers),
+        "tasks": len(mapping),
+        "dry_run": True,
+    }
